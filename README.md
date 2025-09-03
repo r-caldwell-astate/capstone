@@ -1,61 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Capstone App
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+A web application built with **Laravel 10**, **Vite**, and **Vue 3**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Getting Started
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Follow these steps to get your local development environment running.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clone the repository
 
-## Learning Laravel
+```bash
+git clone git@github.com:r-caldwell-astate/capstone.git
+cd capstone
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Install PHP dependencies
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer install
+```
 
-## Laravel Sponsors
+### 3. Install Node.js dependencies
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+npm install
+```
 
-### Premium Partners
+### 4. Set up environment file
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+Copy the example `.env` file and generate a new application key:
 
-## Contributing
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Update `.env` with your local database and environment settings as needed.
 
-## Code of Conduct
+### 5. Run the development servers
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Run Laravel backend:
 
-## Security Vulnerabilities
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+In another terminal, start Vite for frontend assets:
 
-## License
+```bash
+npm run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Your app should now be available at:
+
+* **Backend (Laravel)** → [http://127.0.0.1:8000](http://127.0.0.1:8000)
+* **Frontend (Vite assets)** → auto-injected by Laravel
+
+---
+
+## 🗂 Project Structure
+
+* `app/` → Laravel backend (controllers, models, etc.)
+* `resources/js/` → Vue 3 components and frontend logic
+* `resources/views/` → Blade templates (connects Laravel + Vue)
+* `public/` → Compiled assets and static files
+
+---
+
+## ✅ Useful Commands
+
+### Run database migrations
+
+```bash
+php artisan migrate
+```
+
+### Clear caches (if things break)
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+```
+
+### Build assets for production
+
+```bash
+npm run build
+```
+
+---
+
+## 👥 Team Setup Notes
+
+* **Do not commit `.env`** or other local-only files.
+* Run `composer install` and `npm install` whenever new dependencies are added.
+* Create feature branches for new work (`git checkout -b feature/my-feature`).
+* Open a pull request when ready to merge changes into `main`.
+
+---
+
+## 📖 References
+
+* [Laravel Documentation](https://laravel.com/docs)
+* [Vue 3 Documentation](https://vuejs.org/guide/introduction.html)
+* [Vite Documentation](https://vitejs.dev/guide/)
+
+---
