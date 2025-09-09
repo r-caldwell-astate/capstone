@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_field', function (Blueprint $table) {
-            $table->id('field_id');
-            $table->string('field_name');
+        Schema::create('contract_fields', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('contract_id')->constrained('contracts')->cascadeOnDelete();
+            $table->string('name');          // e.g., client_name
+            $table->string('type');          // text, date, signature
+            $table->boolean('required')->default(false);
             $table->timestamps();
         });
     }

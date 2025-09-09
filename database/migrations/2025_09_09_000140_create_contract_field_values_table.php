@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_field_value', function (Blueprint $table) {
-            $table->id('field_value_id');
-            $table->foreignId('contract_id')->constrained('contract', 'contract_id');
-            $table->foreignId('version_id')->constrained('contract_version', 'version_id');
-            $table->foreignId('field_id')->constrained('contract_field', 'field_id');
-            $table->string('field_value')->nullable();
+        Schema::create('contract_field_values', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('version_id')->constrained('contract_versions', 'id')->cascadeOnDelete();
+            $table->foreignId('field_id')->constrained('contract_fields', 'id')->cascadeOnDelete();
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }

@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_version', function (Blueprint $table) {
-            $table->id('version_id');
-            $table->foreignId('contract_id')->constrained('contract', 'contract_id');
-            $table->integer('version_number');
-            $table->text('content');
-            $table->date('created_date');
+        Schema::create('contract_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique(); // draft/sent/signed
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contract_version');
+        Schema::dropIfExists('contract_status');
     }
 };
