@@ -17,4 +17,7 @@ export default defineConfig({
             },
         }),
     ],
+    optimizeDeps: {
+        include: ['vue-draggable-next'], // <-- add this line
+    },
 });
