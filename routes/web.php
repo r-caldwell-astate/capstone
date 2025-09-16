@@ -5,6 +5,7 @@ use App\Http\Controllers\ContractController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -15,8 +16,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $contracts = $request->user()
+        ->contracts()
+        ->with('status') 
+        ->latest() //newest first
+        ->get();
+
+    return Inertia::render('Dashboard', [
+        'contracts' => $contracts,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -32,7 +32,27 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 1. Validate the incoming data
+        $validated = $request->validate([
+            'recipient_name' => 'required|string|max:255',
+            'recipient_email' => 'required|email|max:255',
+            'parts' => 'required|array',
+        ]);
+
+        // 2. Create the Contract record, manually adding the user's ID
+        $contract = Contract::create([
+            'recipient_name' => $validated['recipient_name'],
+            'recipient_email' => $validated['recipient_email'],
+            'status_id' => 1, // Assuming '1' is the ID for 'Draft' status
+            'user_id' => $request->user()->id, // We are now explicitly setting the user ID
+        ]);
+
+        // dd($contract);
+
+        // Note: Logic to save the contract version and field values will go here next.
+
+        // 3. Redirect back to the dashboard
+        return redirect()->route('dashboard')->with('success', 'Contract saved as a draft.');
     }
 
     /**
