@@ -13,9 +13,12 @@ class ContractStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        ContractStatus::create(['status_name' => 'Draft']);      // This will get ID = 1
-        ContractStatus::create(['status_name' => 'Sent']);       // This will get ID = 2
-        ContractStatus::create(['status_name' => 'Signed']);     // This will get ID = 3
-        ContractStatus::create(['status_name' => 'Archived']);   // This will get ID = 4
+        // Ensure order so IDs are predictable (1=draft, 2=sent, 3=pending, 4=signed)
+        ContractStatus::query()->delete();
+
+        ContractStatus::create(['status_name' => 'draft']);
+        ContractStatus::create(['status_name' => 'sent']);
+        ContractStatus::create(['status_name' => 'pending']);
+        ContractStatus::create(['status_name' => 'signed']); 
     }
 }

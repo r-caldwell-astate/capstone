@@ -21,10 +21,18 @@ class DatabaseSeeder extends Seeder
             ContractStatusSeeder::class,
         ]);
 
-        User::factory()->create([
-            'name' => 'Test',
-            'email' => 'test@test.com',
-            'password' => Hash::make('password'),
+        $user = User::first();
+        if (!$user){
+            $user = User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'test@test.com',
+                'password' => Hash::make('password'),
+            ]);
+        }
+        
+        // Seed some sample contracts for the dashboard (uses first user)
+        $this->call([
+            ContractSeeder::class,
         ]);
     }
 }

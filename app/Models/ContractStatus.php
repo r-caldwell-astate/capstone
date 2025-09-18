@@ -24,6 +24,8 @@ class ContractStatus extends Model
      */
     protected $primaryKey = 'status_id';
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,10 +36,11 @@ class ContractStatus extends Model
     ];
 
     /**
-     * Defines the relationship that a ContractStatus has many Contracts.
+     * A status has many contracts (FK: contracts.status_id → contract_status.status_id).
      */
     public function contracts(): HasMany
     {
-        return $this->hasMany(Contract::class, 'status_id');
+        // Explicit local key helps with non-standard PK names
+        return $this->hasMany(Contract::class, 'status_id', 'status_id');
     }
 }
