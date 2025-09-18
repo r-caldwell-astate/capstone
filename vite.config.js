@@ -18,6 +18,7 @@ export default defineConfig({
         }),
     ],
     optimizeDeps: {
-        include: ['vue-draggable-next'], // <-- add this line
+        include: ['vue', 'vuedraggable'], // <-- add this line
+                                          // Match your import(Ibuki)
     },
 });

@@ -15,6 +15,8 @@ class Contract extends Model
      * The table associated with the model.
      * We must specify this because our table name 'contract' is singular,
      * and Laravel's default is the plural 'contracts'.
+     * 
+     * Singular table + non-standard PK
      *
      * @var string
      */
@@ -43,6 +45,14 @@ class Contract extends Model
         'status_id',
     ];
 
+
+    public $timestamps = false;
+
+    protected $casts = [
+        'sent_date'   => 'datetime',
+        'signed_date' => 'datetime',
+    ];
+
     /**
      * Defines the relationship that a Contract belongs to a User.
      */
@@ -57,7 +67,7 @@ class Contract extends Model
     public function status(): BelongsTo
     {
         // Note: We will create the ContractStatus model next.
-        return $this->belongsTo(ContractStatus::class, 'status_id');
+        return $this->belongsTo(ContractStatus::class, 'status_id', 'status_id');
     }
 
     /**

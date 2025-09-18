@@ -11,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_version', function (Blueprint $table) {
-            $table->id('version_id');
-            $table->foreignId('contract_id')->constrained('contract', 'contract_id');
-            $table->integer('version_number');
-            $table->text('content');
-            $table->date('created_date');
-            $table->timestamps();
+        Schema::create('contract_versions', function (Blueprint $table) {
+             $table->bigIncrements('version_id');
+            $table->unsignedBigInteger('contract_id');
+
+            $table->unsignedInteger('version_number')->default(1);
+            $table->longText('content')->nullable();
+            $table->timestamp('created_date')->useCurrent();
+
+            // FK to contract (singular table per your model)
+            $table->foreign('contract_id')
+                  ->references('contract_id')
+                  ->on('contract')
+                  ->onDelete('cascade');
         });
     }
 
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contract_version');
+        Schema::dropIfExists('contract_versions');
     }
 };
