@@ -24,10 +24,9 @@ const draggableFields = computed(() => {
     }));
 });
 
-// Function to reconstruct parts from saved contract content
 const reconstructParts = () => {
-    if (!props.contract) {
-        return []; // when not editing, start empty
+    if (!props.contract || !props.contract.versions || !props.contract.versions.length) {
+        return []; 
     }
 
     const latestVersion = props.contract.versions[props.contract.versions.length - 1];
@@ -35,36 +34,35 @@ const reconstructParts = () => {
         return [];
     }
 
-    // Split the saved content by the field placeholders, but keep the placeholders
     const chunks = latestVersion.content.split(/(\{\{.*?\}\})/g).filter(c => c);
 
     return chunks.map((chunk, index) => {
-        // Check if the chunk is a placeholder like {{Client Name}}
         const match = chunk.match(/\{\{(.*?)\}\}/);
         if (match) {
             const fieldName = match[1];
-            // Find the full field object from our available fields
             const fieldData = props.availableFields.find(f => f.field_name === fieldName);
-            return {
-                id: `field-${fieldData.field_id}-${index}`,
-                type: 'field',
-                data: fieldData,
-            };
+            if (fieldData) {
+                 return {
+                    id: `field-${fieldData.field_id}-${index}`,
+                    type: 'field',
+                    data: fieldData,
+                };
+            }
+            return null; 
         } else {
-            // Otherwise, it's a plain text block
             return {
                 id: `text-${index}-${Date.now()}`,
                 type: 'text',
                 data: { content: chunk.trim() }
             };
         }
-    }).filter(p => p !== null); // Filter out any nulls if a field wasn't found
+    }).filter(p => p !== null && p.data.content !== ''); 
 };
 
 const form = useForm({
     recipient_name: props.contract?.recipient_name ?? '',
     recipient_email: props.contract?.recipient_email ?? '',
-    parts: reconstructParts(), // Use the new function to set the initial parts
+    parts: reconstructParts(), 
 });
 
 const rawContractText = ref('');
@@ -112,7 +110,6 @@ const submit = () => {
 
         <form @submit.prevent="submit" class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
                 <div v-if="!contract" class="mb-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <h3 class="font-bold text-lg mb-4 text-gray-900">1. Paste Contract Text</h3>
