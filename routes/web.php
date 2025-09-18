@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PDFController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,6 +28,8 @@ Route::get('/dashboard', function (Request $request) {
         'contracts' => $contracts,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
