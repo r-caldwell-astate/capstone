@@ -68,4 +68,12 @@ class Contract extends Model
         // Note: We will create the ContractVersion model next.
         return $this->hasMany(ContractVersion::class, 'contract_id');
     }
+
+    /**
+     * Defines the relationship that a Contract has many ContractFieldValues.
+     */
+    public function fieldValues(): HasMany
+    {
+        return $this->hasMany(ContractFieldValue::class, 'contract_id');
+    }
 }

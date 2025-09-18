@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContractController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use App\Http\Controllers\PDFController;
 
 Route::get('/', function () {
@@ -15,8 +17,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $contracts = $request->user()
+        ->contracts()
+        ->with('status') 
+        ->latest() //newest first
+        ->get();
+
+    return Inertia::render('Dashboard', [
+        'contracts' => $contracts,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
@@ -25,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('contracts', ContractController::class);
 });
 
 require __DIR__.'/auth.php';
